@@ -1,55 +1,56 @@
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
 import AuthProvider from '../../providers/Auth';
+import AppProvider from '../../providers/App';
 import HomePage from '../../pages/Home';
 import LoginPage from '../../pages/Login';
 import NotFound from '../../pages/NotFound';
-import SecretPage from '../../pages/Secret';
-import Private from '../Private';
-import Fortune from '../Fortune';
+import VideoPage from '../../pages/Video';
+import FavoritesPage from '../../pages/Favorites';
 import Layout from '../Layout';
-import { random } from '../../utils/fns';
+import Private from '../Private';
 
 function App() {
-  useLayoutEffect(() => {
-    const { body } = document;
-
-    function rotateBackground() {
-      const xPercent = random(100);
-      const yPercent = random(100);
-      body.style.setProperty('--bg-position', `${xPercent}% ${yPercent}%`);
-    }
-
-    const intervalId = setInterval(rotateBackground, 3000);
-    body.addEventListener('click', rotateBackground);
-
-    return () => {
-      clearInterval(intervalId);
-      body.removeEventListener('click', rotateBackground);
-    };
-  }, []);
+  const theme = {
+    colors: {
+      green: '#6ab993',
+      lightgreen: '#c5e2d4',
+      darkgreen: '#082b2b',
+    },
+    fonts: {
+      heading: 'Tinos',
+      body: 'Lato',
+    },
+  };
 
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Layout>
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route exact path="/login">
-              <LoginPage />
-            </Route>
-            <Private exact path="/secret">
-              <SecretPage />
-            </Private>
-            <Route path="*">
-              <NotFound />
-            </Route>
-          </Switch>
-          <Fortune />
-        </Layout>
+        <AppProvider>
+          <ThemeProvider theme={theme}>
+            <Layout>
+              <Switch>
+                <Route exact path="/">
+                  <HomePage />
+                </Route>
+                <Route exact path="/login">
+                  <LoginPage />
+                </Route>
+                <Private exact path="/favorites">
+                  <FavoritesPage />
+                </Private>
+                <Route path="/video/:id">
+                  <VideoPage />
+                </Route>
+                <Route path="*">
+                  <NotFound />
+                </Route>
+              </Switch>
+            </Layout>
+          </ThemeProvider>
+        </AppProvider>
       </AuthProvider>
     </BrowserRouter>
   );

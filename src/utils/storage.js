@@ -12,6 +12,10 @@ const storage = {
   set(key, value) {
     window.localStorage.setItem(key, JSON.stringify(value));
   },
+
+  delete(key) {
+    window.localStorage.removeItem(key);
+  },
 };
 
 export { storage };
