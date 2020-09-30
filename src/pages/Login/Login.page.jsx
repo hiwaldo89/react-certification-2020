@@ -1,35 +1,12 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useHistory } from 'react-router';
 
 import { useAuth } from '../../providers/Auth';
 import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
-
-const Container = styled.section`
-  background-color: ${({ theme }) => theme.colors.lightgreen};
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const FormWrapper = styled.div`
-  width: 600px;
-  max-width: 80%;
-  h1 {
-    font-family: ${({ theme }) => theme.fonts.heading};
-    text-align: center;
-    color: ${({ theme }) => theme.colors.darkgreen};
-  }
-`;
-
-const Box = styled.div`
-  margin-bottom: 1.5rem;
-  text-align: ${(props) => (props.align ? props.align : 'left')};
-`;
+import Container from './Container.styled';
+import FormWrapper from './FormWrapper.styled';
+import Box from './Box.styled';
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -83,41 +60,5 @@ const LoginPage = () => {
     </Container>
   );
 };
-// import { useHistory } from 'react-router';
-
-// import { useAuth } from '../../providers/Auth';
-// import './Login.styles.css';
-
-// function LoginPage() {
-//   const { login } = useAuth();
-//   const history = useHistory();
-
-//   function authenticate(event) {
-//     event.preventDefault();
-//     login();
-//     history.push('/secret');
-//   }
-
-//   return (
-//     <section className="login">
-//       <h1>Welcome back!</h1>
-//       <form onSubmit={authenticate} className="login-form">
-//         <div className="form-group">
-//           <label htmlFor="username">
-//             <strong>username </strong>
-//             <input required type="text" id="username" />
-//           </label>
-//         </div>
-//         <div className="form-group">
-//           <label htmlFor="password">
-//             <strong>password </strong>
-//             <input required type="password" id="password" />
-//           </label>
-//         </div>
-//         <button type="submit">login</button>
-//       </form>
-//     </section>
-//   );
-// }
 
 export default LoginPage;

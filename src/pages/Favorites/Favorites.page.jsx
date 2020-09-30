@@ -1,22 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import Container from '../../components/Container';
 import VideoGrid from '../../components/VideoGrid';
 import { useApp } from '../../providers/App';
-
-const Title = styled.h1`
-  font-family: ${({ theme }) => theme.fonts.heading};
-  color: ${({ theme }) => theme.colors.darkgreen};
-`;
+import Title from '../../components/Title';
 
 const FavoritesPage = () => {
-  const { state } = useApp();
+  const { favoriteVideos } = useApp();
 
   return (
     <Container>
-      {state.favoriteVideos.length ? (
-        <VideoGrid videos={state.favoriteVideos} />
+      {favoriteVideos.length ? (
+        <VideoGrid videos={favoriteVideos} />
       ) : (
         <Title>Add some videos to your favorite list</Title>
       )}

@@ -7,6 +7,7 @@ import {
 } from './actions';
 import { APP_STATE_KEY } from '../utils/constants';
 import { storage } from '../utils/storage';
+import { getVideoId } from '../utils/getVideoId';
 
 const setSearchQuery = (state, action) => {
   return {
@@ -25,6 +26,13 @@ const setVideos = (state, action) => {
 };
 
 const addToFavorites = (state, action) => {
+  const alreadyInFavorites = state.favoriteVideos.find((currentVideo) => {
+    const currentVideoId = getVideoId(currentVideo);
+    return currentVideoId === action.payload.id.videoId;
+  });
+  if (alreadyInFavorites) {
+    return state;
+  }
   return {
     ...state,
     videos: [...state.videos],
@@ -36,28 +44,34 @@ const removeFromFavorites = (state, action) => {
   return {
     ...state,
     videos: [...state.videos],
-    favoriteVideos: state.favoriteVideos.filter(
-      (currentVideo) => currentVideo.id.videoId !== action.payload
-    ),
+    favoriteVideos: state.favoriteVideos.filter((currentVideo) => {
+      const currentVideoId = getVideoId(currentVideo);
+      return currentVideoId !== action.payload;
+    }),
   };
 };
 
 export const appReducer = (state, action) => {
+  let result;
   switch (action.type) {
     case INIT_STATE:
       return { ...action.payload };
     case SET_SEARCH_QUERY:
-      storage.set(APP_STATE_KEY, setSearchQuery(state, action));
-      return setSearchQuery(state, action);
+      result = setSearchQuery(state, action);
+      storage.set(APP_STATE_KEY, result);
+      return result;
     case SET_VIDEOS:
-      storage.set(APP_STATE_KEY, setVideos(state, action));
-      return setVideos(state, action);
+      result = setVideos(state, action);
+      storage.set(APP_STATE_KEY, result);
+      return result;
     case ADD_TO_FAVORITES:
-      storage.set(APP_STATE_KEY, addToFavorites(state, action));
-      return addToFavorites(state, action);
+      result = addToFavorites(state, action);
+      storage.set(APP_STATE_KEY, result);
+      return result;
     case REMOVE_FROM_FAVORITES:
-      storage.set(APP_STATE_KEY, removeFromFavorites(state, action));
-      return removeFromFavorites(state, action);
+      result = removeFromFavorites(state, action);
+      storage.set(APP_STATE_KEY, result);
+      return result;
     default:
       return state;
   }
