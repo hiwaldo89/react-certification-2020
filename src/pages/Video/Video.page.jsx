@@ -31,7 +31,10 @@ const VideoPage = () => {
       const result = await getVideoById(id);
       setVideo(result.data.items[0]);
     };
-    const selectedVideo = videos.find((currentVideo) => currentVideo.id.videoId === id);
+    const selectedVideo = videos.find((currentVideo) => {
+      const currentVideoId = getVideoId(currentVideo);
+      return currentVideoId === id;
+    });
     if (selectedVideo) {
       setVideo(selectedVideo);
     } else {
