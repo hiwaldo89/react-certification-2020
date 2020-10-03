@@ -15,7 +15,7 @@ const HomePage = () => {
     if (videos.length === 0) {
       fetchVideos(searchQuery);
     }
-  }, []);
+  }, [fetchVideos, searchQuery, videos]);
 
   return (
     <Container>
