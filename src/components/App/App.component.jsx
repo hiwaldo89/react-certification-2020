@@ -12,19 +12,19 @@ import FavoritesPage from '../../pages/Favorites';
 import Layout from '../Layout';
 import Private from '../Private';
 
-function App() {
-  const theme = {
-    colors: {
-      green: '#6ab993',
-      lightgreen: '#c5e2d4',
-      darkgreen: '#082b2b',
-    },
-    fonts: {
-      heading: 'Tinos',
-      body: 'Lato',
-    },
-  };
+export const theme = {
+  colors: {
+    green: '#6ab993',
+    lightgreen: '#c5e2d4',
+    darkgreen: '#082b2b',
+  },
+  fonts: {
+    heading: 'Tinos',
+    body: 'Lato',
+  },
+};
 
+function App() {
   return (
     <BrowserRouter>
       <AuthProvider>

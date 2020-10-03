@@ -1,4 +1,4 @@
-const mockedUser = {
+export const mockedUser = {
   id: '123',
   name: 'Wizeline',
   avatarUrl:

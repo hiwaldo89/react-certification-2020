@@ -12,7 +12,7 @@ import {
 } from '../../store/actions';
 import { searchVideos } from '../../api/videos.api';
 
-const AppContext = createContext(null);
+export const AppContext = createContext(null);
 
 export const useApp = () => {
   const context = useContext(AppContext);

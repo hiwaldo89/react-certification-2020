@@ -4,7 +4,7 @@ import './NotFound.styles.css';
 
 function NotFoundPage() {
   return (
-    <section>
+    <section data-testid="notFound">
       <img src="404.gif" alt="page not found" />
     </section>
   );

@@ -24,12 +24,16 @@ const VideoPage = () => {
   const [video, setVideo] = useState(null);
   const [relatedVideos, setRelatedVideos] = useState(null);
   const { id } = useParams();
-  console.log(video, relatedVideos);
 
   useEffect(() => {
     const fetchVideo = async () => {
-      const result = await getVideoById(id);
-      setVideo(result.data.items[0]);
+      try {
+        const result = await getVideoById(id);
+        setVideo(result.data.items[0]);
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
     };
     const selectedVideo = videos.find((currentVideo) => {
       const currentVideoId = getVideoId(currentVideo);
@@ -44,8 +48,12 @@ const VideoPage = () => {
 
   useEffect(() => {
     const fetchRelatedVideos = async () => {
-      const result = await getRelatedVideos(id);
-      setRelatedVideos(result.data.items);
+      try {
+        const result = await getRelatedVideos(id);
+        setRelatedVideos(result.data.items);
+      } catch (error) {
+        return null;
+      }
     };
     fetchRelatedVideos();
   }, [id]);
@@ -55,29 +63,38 @@ const VideoPage = () => {
       <VideoColumn>
         <VideoWrapper>
           <iframe
+            data-testid="iframe"
             src={`https://www.youtube.com/embed/${id}`}
             title={parseString(video?.snippet?.title)}
             allowFullScreen
           />
         </VideoWrapper>
         <VideoInfo>
-          <VideoHeading>
+          <VideoHeading data-testid="videoHeading">
             <h1>{parseString(video?.snippet?.title)}</h1>
             {authenticated &&
               (favoriteVideos.find((currentVideo) => {
                 const currentVideoId = getVideoId(currentVideo);
                 return currentVideoId === id;
               }) ? (
-                <HeartButton type="button" onClick={() => removeFromFavorites(id)}>
+                <HeartButton
+                  type="button"
+                  onClick={() => removeFromFavorites(id)}
+                  data-testid="removeFromFavorites"
+                >
                   <HeartFill size="20" />
                 </HeartButton>
               ) : (
-                <HeartButton type="button" onClick={() => addToFavorites(video)}>
+                <HeartButton
+                  type="button"
+                  onClick={() => addToFavorites(video)}
+                  data-testid="addToFavorites"
+                >
                   <Heart size="20" />
                 </HeartButton>
               ))}
           </VideoHeading>
-          <p>{parseString(video?.snippet?.description)}</p>
+          <p data-testid="videoDescription">{parseString(video?.snippet?.description)}</p>
         </VideoInfo>
       </VideoColumn>
       <SidebarColumn>

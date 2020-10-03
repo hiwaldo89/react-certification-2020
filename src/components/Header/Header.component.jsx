@@ -11,22 +11,22 @@ const Header = () => {
   return (
     <Headroom style={{ background: '#fff' }}>
       <Navigation>
-        <Link to="/">
+        <Link to="/" data-testid="homeButton">
           <Button type="button">Home</Button>
         </Link>
         {authenticated ? (
           <>
-            <Link to="/favorites" className="ml-auto">
+            <Link to="/favorites" className="ml-auto" data-testid="favoritesButton">
               <Button type="button" mr="14px" green>
                 Favorites
               </Button>
             </Link>
-            <Button type="button" dark onClick={logout}>
+            <Button type="button" dark onClick={logout} data-testid="logoutButton">
               Logout
             </Button>
           </>
         ) : (
-          <Link to="/login" className="ml-auto">
+          <Link to="/login" className="ml-auto" data-testid="loginButton">
             <Button type="button" dark>
               Login
             </Button>

@@ -11,6 +11,7 @@ const TextInput = React.memo(
         onChange={onChange}
         value={value}
         type={password ? 'password' : 'text'}
+        data-testid="inputComponent"
       />
     );
   }

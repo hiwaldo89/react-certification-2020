@@ -28,12 +28,14 @@ function AuthProvider({ children }) {
   }, []);
 
   const login = useCallback(async (username, password) => {
-    const result = await loginApi(username, password);
-    if (result) {
+    try {
+      const result = await loginApi(username, password);
       setAuthenticated(true);
       setUser(result);
       storage.set(AUTH_STORAGE_KEY, true);
       storage.set(USER_STORAGE_KEY, result);
+    } catch (error) {
+      console.log(error);
     }
   }, []);
 
@@ -52,5 +54,5 @@ function AuthProvider({ children }) {
   );
 }
 
-export { useAuth };
+export { useAuth, AuthContext };
 export default AuthProvider;
